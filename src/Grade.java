@@ -12,7 +12,7 @@ public class Grade {
 
         StringBuilder abbreviated = switch (gradeType) {
             case 2 -> new StringBuilder("AP");
-            case 1 -> new StringBuilder("Adv");
+            case 1 -> new StringBuilder("ADV");
             case 0 -> new StringBuilder("OL");
             default -> null;
         };
@@ -39,7 +39,7 @@ public class Grade {
                 // add to hashmap
                 grades.put(secondSemesterGrade, gradeConvert.convert(secondSemesterGrade, gradeType));
             }
+            Main.spacer(50, true);
         }
-        Main.spacer(50, true);
     }
 }

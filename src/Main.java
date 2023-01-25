@@ -16,9 +16,7 @@ import java.util.Map;
 
 public class Main {
     static void spacer(int count, boolean newline) {
-        System.out.println(newline
-                ? "\n" + "─".repeat(count) + "\n"
-                : "─".repeat(count));
+        System.out.println(newline ? "\n" + "─".repeat(count) + "\n" : "─".repeat(count));
     }
 
     static void titleScreen() {
@@ -49,7 +47,11 @@ public class Main {
         System.out.print("How many advanced placement (AP) classes have been taken so far? >>> ");
         int apClassNumber = Integer.parseInt(userInput.readLine());
 
-        return new int[] {onlevelClassNumber, advancedClassNumber, apClassNumber};
+        return new int[] {
+                onlevelClassNumber,
+                advancedClassNumber,
+                apClassNumber
+        };
     }
 
     static void instructions() {
@@ -68,27 +70,40 @@ public class Main {
     static void printGPA(Map<Integer, Double> map) {
         Average gradeAverage = new Average();
 
-        System.out.println("Your weighted GPA is: ".concat(String.valueOf(gradeAverage.hashValuesAverage((map)))));
-        System.out.println("Your average grade is: ".concat(String.valueOf(gradeAverage.hashKeysAverage(map))));
+        System.out.println("Your weighted GPA is: " + gradeAverage.hashValuesAverage((map)));
+        System.out.println("Your average grade is: " + gradeAverage.hashKeysAverage(map));
+
     }
 
     public static void main(String[] args) throws IOException {
-        Grade userGrades = new Grade();
+        BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 
-        // introduction
         titleScreen();
-
-        int[] classNumbers = askClasses();
-
-        instructions();
+        Grade userGrades = new Grade();
 
         // Grade, GPA equivalent
         Map<Integer, Double> grades = new HashMap<>();
 
-        // prompt user for grades using Grade class
-        for (int i = 0; i < 3; i++) {
-            userGrades.getGrades(grades, i, classNumbers[i]);
+        // infinite loop
+        for (;;) {
+            int[] classNumbers = askClasses();
+            instructions();
+
+            // prompt user for grades using Grade class
+            for (int i = 0; i < 3; i++) {
+                userGrades.getGrades(grades, i, classNumbers[i]);
+            }
+
+            printGPA(grades);
+
+            System.out.print("\nWould you like to calculate GPA again? (y/n) >>> ");
+            String choice = userInput.readLine();
+
+            if (choice.toLowerCase().startsWith("n")) {
+                break;
+            }
+
+            spacer(50, true);
         }
-        printGPA(grades);
     }
 }

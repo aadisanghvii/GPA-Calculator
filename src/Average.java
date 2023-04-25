@@ -34,5 +34,4 @@ public class Average {
 
         return result / map.size();
     }
-
 }
